@@ -1,20 +1,14 @@
 import ReactDOM from 'react-dom/client'
-import { Offline, Online } from 'react-detect-offline'
-import React from 'react'
+import { Provider } from 'react-redux'
 
 import './styles/main.scss'
-import ErrorIndicator from './components/Error/ErrorIndicator/ErrorIndicator'
-import ErrorMessages from './components/Error/ErrorMessages/ErrorMessages'
+
 import App from './components/App/App'
+import store from './redux/store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <React.StrictMode>
-    <Online>
-      <App />
-    </Online>
-    <Offline>
-      <ErrorIndicator message={ErrorMessages.NETWORK_ERROR} />
-    </Offline>
-  </React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
 )

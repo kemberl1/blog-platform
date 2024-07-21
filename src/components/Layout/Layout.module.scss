@@ -4,4 +4,8 @@
   }
   background-color: $background-color-body;
   padding: 26px 30px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 27px;
+	justify-content: center;
 }

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import Layout from '../components/Layout/Layout'
-import ArticlesPage from '../components/ArticlesList/ArticlesList'
+import ArticlesPage from '../pages/ArticlesPage'
 
 const router = createBrowserRouter([
   {
@@ -10,6 +10,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <ArticlesPage />,
+      },
+      {
+        path: 'articles',
         element: <ArticlesPage />,
       },
     ],
