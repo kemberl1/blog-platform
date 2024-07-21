@@ -14,11 +14,19 @@ function Article({ article }) {
   } = article
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
+  const displayedTags = tagList.slice(0, 4)
   const [active, setActive] = useState(false)
   const likeIcon = active ? '/src/public/img/LikeIcon--active.svg' : '/src/public/img/LikeIcon.svg'
 
   const handleClick = () => {
     setActive(!active)
+  }
+
+  const truncateTag = (tag) => {
+    if (tag.length > 25) {
+      return `${tag.substring(0, 25)}...`
+    }
+    return tag
   }
 
   return (
@@ -28,12 +36,12 @@ function Article({ article }) {
           <CustomLink to="/">
             <h5 className="article__title">{title}</h5>
           </CustomLink>
-          {tagList.length > 0 && (
+          {displayedTags.length > 0 && (
             <div className="article__tags">
-              {tagList.map((tag) =>
+              {displayedTags.map((tag) =>
                 tag ? (
                   <span key={tag} className="article__tag">
-                    {tag}
+                    {truncateTag(tag)}
                   </span>
                 ) : null
               )}
