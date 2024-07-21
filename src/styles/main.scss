@@ -1,0 +1,23 @@
+//General
+@import 'variables';
+@import 'mixins';
+@import '/node_modules/normalize.css/normalize.css';
+@import '../styles/fonts.scss';
+
+//App
+@import '../components/App/App.module.scss';
+
+//Layout
+@import '../components/Layout/Layout.module.scss';
+
+//Header
+@import '../components/Header/Header.module.scss';
+
+//Article
+@import '../components/Article/Article.module.scss';
+
+//ArticleList
+@import '../components/ArticlesList/ArticlesList.module.scss';
+
+//LinkButton
+@import '../components/CustomLink/CustomLink.module.scss';

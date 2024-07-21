@@ -1,0 +1,22 @@
+.header {
+  background-color: $background-color-base;
+  font-family: $Inter-Regular;
+  display: flex;
+	column-gap: 27px;
+  justify-content: end;
+  padding: 0 22px;
+  height: 80px;
+  color: $header-color;
+  font-size: 18px;
+  line-height: 28px;
+  align-items: center;
+}
+
+.header__title{
+margin-right: auto;
+}
+
+.header__button{
+	padding-right: 13px;
+}
+
