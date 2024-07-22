@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const blogApi = createApi({
+export const ApiSlice = createApi({
   reducerPath: 'blogApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://blog.kata.academy/api/' }),
   endpoints: (build) => ({
@@ -10,4 +10,4 @@ export const blogApi = createApi({
   }),
 })
 
-export const { useGetPostsQuery } = blogApi
+export const { useGetPostsQuery } = ApiSlice

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import ArticlesList from '../components/ArticlesList/ArticlesList'
-import { useGetPostsQuery } from '../redux/blogApi'
+import { useGetPostsQuery } from '../redux/ApiSlice'
 import CustomPagination from '../components/CustomPagination/CustomPagination'
 
 function ArticlesPage() {
