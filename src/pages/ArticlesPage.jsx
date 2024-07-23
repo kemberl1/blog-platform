@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react'
+import { scroller } from 'react-scroll'
+import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import ArticlesList from '../components/ArticlesList/ArticlesList'
 import { useGetPostsQuery } from '../redux/ApiSlice'
 import CustomPagination from '../components/CustomPagination/CustomPagination'
+import ErrorIndicator from '../components/Error/ErrorIndicator/ErrorIndicator'
+import Loader from '../Loader/Loader'
 
 function ArticlesPage() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const pageFromUrl = parseInt(searchParams.get('page'), 10) || 1
-  const [page, setPage] = useState(pageFromUrl)
-  const { data, isLoading, error } = useGetPostsQuery({ page })
-
-  const handlePageChange = (newPage) => {
-    setPage(newPage)
-  }
+  const page = parseInt(searchParams.get('page'), 10) || 1
+  const { data, isLoading, error, refetch } = useGetPostsQuery({ page })
 
   useEffect(() => {
-    setSearchParams({ page })
-    window.scrollTo(0, 0)
-  }, [page, setSearchParams])
+    refetch()
+  }, [searchParams, refetch])
 
-  if (isLoading) return <p>Loading...</p>
-  if (error) return <p>Error: {error.message}</p>
+  const handlePageChange = (newPage) => {
+    setSearchParams({ page: newPage })
+    scroller.scrollTo('main-content', { smooth: true, offset: -80 })
+  }
+
+  if (isLoading) return <Loader />
+  if (error) return <ErrorIndicator message={error.message} />
 
   return (
     <>
