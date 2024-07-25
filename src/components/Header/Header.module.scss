@@ -2,21 +2,55 @@
   background-color: $background-color-base;
   font-family: $Inter-Regular;
   display: flex;
-	column-gap: 27px;
+  column-gap: 27px;
   justify-content: end;
   padding: 0 22px;
-  height: 80px;
+  min-height: 80px;
   color: $header-color;
   font-size: 18px;
   line-height: 28px;
   align-items: center;
+  &__title {
+    margin: 0;
+    margin-right: auto;
+  }
+  &__avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  &__user-info {
+    display: flex;
+    align-items: center;
+    column-gap: 13px;
+  }
+	&__auth-buttons{
+		display: flex;
+		align-items: center;
+		column-gap: 19px;
+	}
 }
 
-.header__title{
-margin-right: auto;
+.custom-link {
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+  color: $success-color;
+  text-decoration: none;
 }
 
-.header__button{
-	padding-right: 13px;
+.button-create {
+  padding: 1px 8px;
+  font-size: 14px;
 }
 
+.button-auth {
+  padding: 11px 19px;
+  color: $text-color;
+}
+
+.sign-up {
+  color: $success-color;
+}

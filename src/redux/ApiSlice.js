@@ -10,7 +10,21 @@ export const ApiSlice = createApi({
     getArticle: build.query({
       query: (slug) => `articles/${slug}`,
     }),
+    registerUser: build.mutation({
+      query: (userData) => ({
+        url: 'users',
+        method: 'POST',
+        body: { user: userData },
+      }),
+    }),
+    loginUser: build.mutation({
+      query: (userData) => ({
+        url: 'users/login',
+        method: 'POST',
+        body: { user: userData },
+      }),
+    }),
   }),
 })
 
-export const { useGetPostsQuery, useGetArticleQuery } = ApiSlice
+export const { useGetPostsQuery, useGetArticleQuery, useRegisterUserMutation, useLoginUserMutation } = ApiSlice

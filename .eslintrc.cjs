@@ -57,4 +57,12 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['src/components/Forms'], // Укажите путь к вашему файлу Form.jsx
+      rules: {
+        'react/jsx-props-no-spreading': 'off', // Разрешить использование spread-оператора для пропсов в JSX только для этого файла
+      },
+    },
+  ],
 }
