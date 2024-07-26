@@ -1,34 +1,14 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import PropTypes from 'prop-types'
 
-import signInSchema from '../../utils/formsValidation/signInValidation'
 import CustomLink from '../CustomLink/CustomLink'
 
 import formStyles from './Forms.module.scss'
 
-function Form() {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(signInSchema) })
-
-  const onSubmit = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(() => resolve(data), 2000))
-      reset()
-    } catch (error) {
-      setError('root', { type: 'manual', message: error.message })
-    }
-  }
-
+function SignInForm({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
   return (
     <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
-      <p className={formStyles.title}>SignUp</p>
-
+      {isSuccess && <p className={formStyles.successMessage}>Login successful!</p>}
+      <p className={formStyles.title}>Sign In</p>
       <label htmlFor="email" className={formStyles.inputLabel}>
         Email
         <input
@@ -41,7 +21,6 @@ function Form() {
         />
         {errors.email && <p className={formStyles.errorMessage}>{errors.email.message}</p>}
       </label>
-
       <label htmlFor="password" className={formStyles.inputLabel}>
         Password
         <input
@@ -54,13 +33,10 @@ function Form() {
         />
         {errors.password && <p className={formStyles.errorMessage}>{errors.password.message}</p>}
       </label>
-
       <button disabled={isSubmitting} type="submit" className={formStyles.button}>
         {isSubmitting ? 'Loading...' : 'Login'}
       </button>
-
       {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
-
       <div className={formStyles.auth}>
         <p className={formStyles.authText}>Don’t have an account? </p>
         <CustomLink to="/sign-up" className={formStyles.authLink}>
@@ -71,4 +47,11 @@ function Form() {
   )
 }
 
-export default Form
+SignInForm.propTypes = {
+  register: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+}
+
+export default SignInForm

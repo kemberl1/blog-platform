@@ -1,26 +1,35 @@
-import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
 
-import { logout } from '../../redux/userSlice'
+import { setUser, logout } from '../../redux/userSlice'
 import Header from '../Header/Header'
 
 function Layout() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const user = useSelector((state) => state.user.user)
-  const location = useLocation()
+  const loggedInUser = useSelector((state) => state.user.user) // Переименовал user в loggedInUser
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const { user, token } = JSON.parse(userData)
+      dispatch(setUser({ user, token }))
+    }
+  }, [dispatch])
 
   const handleSignOut = () => {
     dispatch(logout())
-    navigate('/')
+    localStorage.removeItem('user')
+    navigate('/sign-in', { replace: true })
   }
 
   return (
     <div className="layout">
-      <Header user={user} onSignOut={handleSignOut} />
-      <section className="main-content">
+      <Header user={loggedInUser} onSignOut={handleSignOut} />
+      <main className="main-content">
         <Outlet />
-      </section>
+      </main>
     </div>
   )
 }

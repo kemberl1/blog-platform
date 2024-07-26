@@ -4,11 +4,12 @@ import CustomLink from '../CustomLink/CustomLink'
 
 import formStyles from './Forms.module.scss'
 
-function Form({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function SignUpForm({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
   return (
     <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
       <p className={formStyles.title}>Create a new account</p>
       {isSuccess && <p className={formStyles.successMessage}>Registration successful!</p>}
+
       <label htmlFor="username" className={formStyles.inputLabel}>
         Username
         <input
@@ -79,7 +80,7 @@ function Form({ register, handleSubmit, onSubmit, errors, isSubmitting, isSucces
         {isSubmitting ? 'Loading...' : 'Create'}
       </button>
 
-      {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
+      {errors.apiError && <p className={formStyles.errorMessage}>{errors.apiError.message}</p>}
 
       <div className={formStyles.auth}>
         <p className={formStyles.authText}>Already have an account? </p>
@@ -91,7 +92,7 @@ function Form({ register, handleSubmit, onSubmit, errors, isSubmitting, isSucces
   )
 }
 
-Form.propTypes = {
+SignUpForm.propTypes = {
   register: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -99,4 +100,4 @@ Form.propTypes = {
   isSuccess: PropTypes.bool.isRequired,
 }
 
-export default Form
+export default SignUpForm

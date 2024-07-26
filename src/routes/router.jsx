@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <SignInPage />,
       },
       {
-        path: 'profile/edit',
+        path: 'profile',
         element: <EditProfilePage />,
       },
     ],

@@ -1,32 +1,12 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import editProfileSchema from '../../utils/formsValidation/editProfileValidation'
+import PropTypes from 'prop-types'
 
 import formStyles from './Forms.module.scss'
 
-function EditProfileForm() {
-  const {
-    register,
-    handleSubmit,
-    setError,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm({ resolver: zodResolver(editProfileSchema) })
-
-  const onSubmit = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(() => resolve(data), 2000))
-      reset()
-    } catch (error) {
-      setError('root', { type: 'manual', message: error.message })
-    }
-  }
-
+function EditProfileForm({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
   return (
     <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
       <p className={formStyles.title}>Edit Profile</p>
-
+      {isSuccess && <p className={formStyles.successMessage}>Edited successfully!</p>}
       <label htmlFor="username" className={formStyles.inputLabel}>
         User Name
         <input
@@ -35,6 +15,7 @@ function EditProfileForm() {
           placeholder="User Name"
           className={`${formStyles.input} ${errors.username ? formStyles.invalid : ''}`}
           {...register('username')}
+          autoComplete="username"
         />
         {errors.username && <p className={formStyles.errorMessage}>{errors.username.message}</p>}
       </label>
@@ -52,29 +33,29 @@ function EditProfileForm() {
         {errors.email && <p className={formStyles.errorMessage}>{errors.email.message}</p>}
       </label>
 
-      <label htmlFor="newPassword" className={formStyles.inputLabel}>
+      <label htmlFor="password" className={formStyles.inputLabel}>
         New Password
         <input
-          id="newPassword"
+          id="password"
           type="password"
           placeholder="New Password"
-          className={`${formStyles.input} ${errors.newPassword ? formStyles.invalid : ''}`}
-          {...register('newPassword')}
+          className={`${formStyles.input} ${errors.password ? formStyles.invalid : ''}`}
+          {...register('password')}
           autoComplete="new-password"
         />
-        {errors.newPassword && <p className={formStyles.errorMessage}>{errors.newPassword.message}</p>}
+        {errors.password && <p className={formStyles.errorMessage}>{errors.password.message}</p>}
       </label>
 
-      <label htmlFor="avatarImage" className={formStyles.inputLabel}>
+      <label htmlFor="image" className={formStyles.inputLabel}>
         Avatar Image (URL)
         <input
-          id="avatarImage"
+          id="image"
           type="text"
           placeholder="Avatar Image (URL)"
-          className={`${formStyles.input} ${errors.avatarImage ? formStyles.invalid : ''}`}
-          {...register('avatarImage')}
+          className={`${formStyles.input} ${errors.image ? formStyles.invalid : ''}`}
+          {...register('image')}
         />
-        {errors.avatarImage && <p className={formStyles.errorMessage}>{errors.avatarImage.message}</p>}
+        {errors.image && <p className={formStyles.errorMessage}>{errors.image.message}</p>}
       </label>
 
       <button disabled={isSubmitting} type="submit" className={formStyles.button}>
@@ -84,6 +65,14 @@ function EditProfileForm() {
       {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
     </form>
   )
+}
+
+EditProfileForm.propTypes = {
+  register: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  isSuccess: PropTypes.bool.isRequired,
 }
 
 export default EditProfileForm
