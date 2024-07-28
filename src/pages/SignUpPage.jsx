@@ -25,15 +25,13 @@ function SignUpPage() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(signUpSchema) })
 
-  console.log(errors)
-
   const onSubmit = async (data) => {
     setIsSubmitting(true)
     try {
       const response = await registerUser(data).unwrap()
-      const { user, token } = response.user
-      dispatch(setUser({ user: response.user, token: response.user.token }))
-      localStorage.setItem('user', JSON.stringify({ user, token }))
+      const { user } = response
+      dispatch(setUser({ user, token: user.token }))
+      localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
       setIsSuccess(true)
       setTimeout(() => {

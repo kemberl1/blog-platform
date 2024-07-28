@@ -6,12 +6,14 @@ import ArticlesList from '../components/ArticlesList/ArticlesList'
 import { useGetPostsQuery } from '../redux/ApiSlice'
 import CustomPagination from '../components/CustomPagination/CustomPagination'
 import ErrorIndicator from '../components/Error/ErrorIndicator/ErrorIndicator'
-import Loader from '../Loader/Loader'
+import Loader from '../components/Loader/Loader'
+import useArticleActions from '../hooks/useArticleActions'
 
 function ArticlesPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = parseInt(searchParams.get('page'), 10) || 1
   const { data, isLoading, error, refetch } = useGetPostsQuery({ page })
+  const { handleLike, handleUnlike, handleDelete, handleEditClick } = useArticleActions()
 
   useEffect(() => {
     refetch()
@@ -27,7 +29,13 @@ function ArticlesPage() {
 
   return (
     <>
-      <ArticlesList articles={data?.articles || []} />
+      <ArticlesList
+        articles={data?.articles || []}
+        handleLike={(slug) => handleLike(slug, refetch)}
+        handleUnlike={(slug) => handleUnlike(slug, refetch)}
+        handleDelete={handleDelete}
+        handleEditClick={handleEditClick}
+      />
       <CustomPagination
         currentPage={page}
         totalCount={data?.articlesCount || 0}

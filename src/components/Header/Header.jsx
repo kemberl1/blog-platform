@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import CustomLink from '../CustomLink/CustomLink'
 
-function Header({ user = null, onSignOut }) {
+function Header({ user, onSignOut }) {
   const defaultAvatar = 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
   return (
@@ -13,7 +13,7 @@ function Header({ user = null, onSignOut }) {
 
       {user ? (
         <>
-          <CustomLink to="/create-article" className="button-create custom-link">
+          <CustomLink to="/new-article" className="button-create custom-link">
             Create Article
           </CustomLink>
           <CustomLink to="/profile" className="header__user-info">
@@ -41,8 +41,8 @@ function Header({ user = null, onSignOut }) {
 Header.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-  }),
+    image: PropTypes.string,
+  }).isRequired,
   onSignOut: PropTypes.func.isRequired,
 }
 

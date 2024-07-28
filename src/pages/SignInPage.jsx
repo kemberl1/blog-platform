@@ -32,9 +32,9 @@ function SignInPage() {
     setIsSubmitting(true)
     try {
       const response = await loginUser(data).unwrap()
-      const { user, token } = response.user
-      dispatch(setUser({ user: response.user, token: response.user.token }))
-      localStorage.setItem('user', JSON.stringify({ user, token }))
+      const { user } = response
+      dispatch(setUser({ user, token: user.token }))
+      localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
       setIsSuccess(true)
       setTimeout(() => {

@@ -9,8 +9,6 @@ export const ApiSlice = createApi({
       if (token) {
         headers.set('Authorization', `Token ${token}`)
         console.log('Authorization header set with token:', token)
-      } else {
-        console.log('No token found, Authorization header not set')
       }
       return headers
     },
@@ -43,6 +41,38 @@ export const ApiSlice = createApi({
         body: { user: userData },
       }),
     }),
+    createArticle: build.mutation({
+      query: (articleData) => ({
+        url: 'articles',
+        method: 'POST',
+        body: { article: articleData },
+      }),
+    }),
+    updateArticle: build.mutation({
+      query: ({ slug, article }) => ({
+        url: `articles/${slug}`,
+        method: 'PUT',
+        body: { article },
+      }),
+    }),
+    deleteArticle: build.mutation({
+      query: (slug) => ({
+        url: `articles/${slug}`,
+        method: 'DELETE',
+      }),
+    }),
+    likeArticle: build.mutation({
+      query: (slug) => ({
+        url: `articles/${slug}/favorite`,
+        method: 'POST',
+      }),
+    }),
+    unlikeArticle: build.mutation({
+      query: (slug) => ({
+        url: `articles/${slug}/favorite`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 })
 
@@ -52,4 +82,9 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useUpdateUserMutation,
+  useCreateArticleMutation,
+  useUpdateArticleMutation,
+  useDeleteArticleMutation,
+  useLikeArticleMutation,
+  useUnlikeArticleMutation,
 } = ApiSlice

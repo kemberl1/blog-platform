@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { setUser, logout } from '../../redux/userSlice'
 import Header from '../Header/Header'
@@ -8,7 +8,7 @@ import Header from '../Header/Header'
 function Layout() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const loggedInUser = useSelector((state) => state.user.user) // Переименовал user в loggedInUser
+  const loggedInUser = useSelector((state) => state.user.user)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')

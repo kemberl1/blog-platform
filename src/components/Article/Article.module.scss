@@ -109,12 +109,42 @@
     font-weight: $regular;
     margin: 0;
     overflow-wrap: anywhere;
+    &-container {
+      display: flex;
+			align-items: center; 
+    }
     &-description {
       margin: 0;
+			margin-right: auto;
     }
   }
 }
 .like-icon {
   width: 16px;
   height: 16px;
+}
+
+.deleteButton,
+.editButton {
+  box-sizing: border-box;
+  background-color: white;
+  padding: 6px 17px;
+  border: 1px solid;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+  }
+}
+
+.deleteButton {
+  color: $highlight-color;
+  margin-right: 12px;
+}
+
+.editButton {
+  color: $success-color;
 }

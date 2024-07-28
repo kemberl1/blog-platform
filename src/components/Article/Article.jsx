@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { uid } from 'uid'
+import { Popconfirm } from 'antd'
 
 import MarkdownRenderer from '../../utils/markdownUtils'
 import CustomLink from '../CustomLink/CustomLink'
@@ -14,9 +14,9 @@ import {
   truncateTag,
 } from '../../utils/articleValidation'
 
-function Article({ article, showBody = false }) {
-  const [active, setActive] = useState(false)
+import articleStyles from './Article.module.scss'
 
+function Article({ article, showBody = false, handleDelete, handleEditClick, handleLike, handleUnlike }) {
   if (!article) {
     return null
   }
@@ -30,6 +30,7 @@ function Article({ article, showBody = false }) {
     favoritesCount = 0,
     author = {},
     slug,
+    favorited,
   } = article
 
   const { username = '', image = '' } = author
@@ -41,10 +42,14 @@ function Article({ article, showBody = false }) {
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
   const displayedTags = validatedTagList.slice(0, 4)
-  const likeIcon = active ? '/src/public/img/LikeIcon--active.svg' : '/src/public/img/LikeIcon.svg'
+  const likeIcon = favorited ? '/src/public/img/LikeIcon--active.svg' : '/src/public/img/LikeIcon.svg'
 
   const handleClick = () => {
-    setActive(!active)
+    if (favorited) {
+      handleUnlike()
+    } else {
+      handleLike()
+    }
   }
 
   return (
@@ -81,7 +86,27 @@ function Article({ article, showBody = false }) {
         {image && <img src={image} alt={`${validatedUsername}'s avatar`} className="article__avatar" />}
       </header>
       <div className="article__text">
-        <p className="article__text-description">{truncateText(validatedDescription)}</p>
+        <div className="article__text-container">
+          <p className="article__text-description">{truncateText(validatedDescription)}</p>
+          {showBody && (
+            <>
+              <Popconfirm
+                title="Are you sure to delete this article?"
+                onConfirm={handleDelete}
+                okText="Yes"
+                cancelText="No"
+                placement="rightTop"
+              >
+                <button type="button" className={articleStyles.deleteButton}>
+                  Delete
+                </button>
+              </Popconfirm>
+              <button type="button" className={articleStyles.editButton} onClick={handleEditClick}>
+                Edit
+              </button>
+            </>
+          )}
+        </div>
         {showBody && (
           <div className="article__text-body">
             <MarkdownRenderer markdownContent={body} />
@@ -105,8 +130,12 @@ Article.propTypes = {
     }),
     body: PropTypes.string,
     slug: PropTypes.string.isRequired,
+    favorited: PropTypes.bool.isRequired,
   }).isRequired,
-  showBody: PropTypes.bool,
+  handleDelete: PropTypes.func.isRequired,
+  handleEditClick: PropTypes.func.isRequired,
+  handleLike: PropTypes.func.isRequired,
+  handleUnlike: PropTypes.func.isRequired,
 }
 
 export default Article

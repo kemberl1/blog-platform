@@ -8,14 +8,22 @@ const editProfileSchema = z.object({
   email: z
     .string()
     .email('Invalid email address')
+    .min(1, 'Email cannot be empty')
     .transform((val) => val.toLowerCase()),
   password: z
     .string()
     .optional()
-    .refine((value) => !value || value.length >= 6, {
-      message: 'New password needs to be at least 6 characters long',
+    .refine((value) => !value || (value.length >= 6 && value.length <= 40), {
+      message: 'New password needs to be between 6 and 40 characters long',
     }),
-  image: z.string().url('Invalid URL').optional().nullable(),
+  image: z
+    .string()
+    .transform((val) => (val === '' ? null : val))
+    .refine((val) => val === null || z.string().url().safeParse(val).success, {
+      message: 'Invalid URL',
+    })
+    .nullable()
+    .optional(),
 })
 
 export default editProfileSchema
