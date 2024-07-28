@@ -13,6 +13,8 @@ import {
   validateUsername,
   truncateTag,
 } from '../../utils/articleValidation'
+import likeIconActive from '../../public/img/LikeIcon--active.svg'
+import likeIcon from '../../public/img/LikeIcon.svg'
 
 import articleStyles from './Article.module.scss'
 
@@ -42,7 +44,7 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
   const displayedTags = validatedTagList.slice(0, 4)
-  const likeIcon = favorited ? '/src/public/img/LikeIcon--active.svg' : '/src/public/img/LikeIcon.svg'
+  const like = favorited ? likeIconActive : likeIcon
 
   const handleClick = () => {
     if (favorited) {
@@ -62,7 +64,7 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
             </CustomLink>
             <div className="article__favorites">
               <CustomLink onClick={handleClick} className="like-link">
-                <img src={likeIcon} alt="like icon" className="like-icon" />
+                <img src={like} alt="like icon" className="like-icon" />
               </CustomLink>
               <p className="article__favorites-count">{favoritesCount}</p>
             </div>

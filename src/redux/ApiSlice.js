@@ -8,7 +8,6 @@ export const ApiSlice = createApi({
       const { token } = getState().user
       if (token) {
         headers.set('Authorization', `Token ${token}`)
-        console.log('Authorization header set with token:', token)
       }
       return headers
     },
