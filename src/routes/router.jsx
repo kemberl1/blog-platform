@@ -8,6 +8,7 @@ import SignInPage from '../pages/SignInPage'
 import EditProfilePage from '../pages/EditProfilePage'
 import NewArticlePage from '../pages/NewArticlePage'
 import EditArticlePage from '../pages/EditArticlePage'
+import RequireAuth from '../hoc/RequireAuth'
 
 const router = createBrowserRouter([
   {
@@ -36,15 +37,27 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        element: <EditProfilePage />,
+        element: (
+          <RequireAuth>
+            <EditProfilePage />
+          </RequireAuth>
+        ),
       },
       {
         path: 'new-article',
-        element: <NewArticlePage />,
+        element: (
+          <RequireAuth>
+            <NewArticlePage />
+          </RequireAuth>
+        ),
       },
       {
         path: 'articles/:slug/edit',
-        element: <EditArticlePage />,
+        element: (
+          <RequireAuth>
+            <EditArticlePage />
+          </RequireAuth>
+        ),
       },
     ],
   },
