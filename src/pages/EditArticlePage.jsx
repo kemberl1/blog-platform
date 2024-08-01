@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useUpdateArticleMutation, useGetArticleQuery } from '../redux/ApiSlice'
 import articleSchema from '../utils/formsValidation/articleValidation'
-import EditArticleForm from '../components/Forms/EditArticleForm'
+import ArticleForm from '../components/Forms/ArticleForm'
 
 function EditArticlePage() {
   const { slug } = useParams()
@@ -17,11 +17,10 @@ function EditArticlePage() {
   const navigate = useNavigate()
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     reset,
-    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(articleSchema),
@@ -50,6 +49,7 @@ function EditArticlePage() {
   }, [article, reset])
 
   const onSubmit = async (data) => {
+		console.log('new article data', data)
     setIsSubmitting(true)
     try {
       const articleData = {
@@ -58,7 +58,7 @@ function EditArticlePage() {
         body: data.body,
         tagList: data.tags.map((tag) => tag.value).filter((value) => value.trim() !== ''),
       }
-      const response = await updateArticle({ slug, article: articleData }).unwrap()
+      await updateArticle({ slug, article: articleData }).unwrap()
       setIsSuccess(true)
       refetch()
       setTimeout(() => {
@@ -81,8 +81,8 @@ function EditArticlePage() {
   if (fetchError) return <div>Error loading article</div>
 
   return (
-    <EditArticleForm
-      register={register}
+    <ArticleForm
+      control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       errors={errors}

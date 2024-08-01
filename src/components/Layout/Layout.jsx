@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
+
 import { setUser, logout } from '../../redux/userSlice'
 import Header from '../Header/Header'
 import AuthNotification from '../AuthNotification/AuthNotification'
@@ -20,14 +21,11 @@ function Layout() {
     }
   }, [dispatch])
 
-
-
   const handleSignOut = () => {
     dispatch(logout())
     localStorage.removeItem('user')
-    toast.info(`You have successfully loged out. `)
+    toast.info('You have successfully loged out. ')
     navigate('/sign-in', { replace: true })
-
   }
 
   return (

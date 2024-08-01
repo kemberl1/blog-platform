@@ -2,6 +2,7 @@
   background-color: $background-color-base;
   font-family: $Inter-Regular;
   display: flex;
+	flex-wrap: wrap;
   column-gap: 27px;
   justify-content: end;
   padding: 0 22px;
@@ -13,6 +14,9 @@
   &__title {
     margin: 0;
     margin-right: auto;
+    &:hover {
+      color: grey;
+    }
   }
   &__avatar {
     width: 46px;
@@ -24,33 +28,65 @@
     display: flex;
     align-items: center;
     column-gap: 13px;
+    &:hover {
+      opacity: 0.8;
+    }
   }
-	&__auth-buttons{
-		display: flex;
-		align-items: center;
-		column-gap: 19px;
-	}
+  &__auth-buttons {
+    display: flex;
+    align-items: center;
+    column-gap: 19px;
+  }
 }
 
-.custom-link {
-  display: inline-block;
+.button-create {
   border: 1px solid;
   border-radius: 5px;
   cursor: pointer;
   color: $success-color;
   text-decoration: none;
-}
-
-.button-create {
   padding: 1px 8px;
   font-size: 14px;
+  transition: all 0.1s ease-in;
+  &:hover {
+    color: rgb(49, 206, 5);
+  }
 }
 
 .button-auth {
-  padding: 11px 19px;
+  padding: 6px 18px;
+  font-size: 18px;
+  color: inherit;
+  border-color: inherit;
   color: $text-color;
+	min-height: 61px;
+  &:hover,
+  &:focus {
+    color: grey !important;
+    border-color: grey !important;
+  }
+}
+
+.sign-in {
+  &:hover,
+  &:focus {
+    color: grey;
+  }
 }
 
 .sign-up {
+  padding: 6px 18px;
+  box-sizing: border-box;
+  border: 1px solid;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  color: inherit;
+  border-color: inherit;
+  padding: 11px 19px;
   color: $success-color;
+  &:hover,
+  &:focus {
+    color: rgb(53, 224, 5);
+  }
 }

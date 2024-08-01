@@ -1,54 +1,54 @@
 import PropTypes from 'prop-types'
+import { Form, Button } from 'antd'
+import classNames from 'classnames'
 
-import CustomLink from '../CustomLink/CustomLink'
+import FormController from '../FormController/FormController'
+import CustomButton from '../CustomButton/CustomButton'
 
 import formStyles from './Forms.module.scss'
 
-function SignInForm({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function SignInForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
   return (
-    <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      layout="vertical"
+      className={classNames(formStyles.form, 'edit-article-form')}
+      onFinish={handleSubmit(onSubmit)}
+    >
       {isSuccess && <p className={formStyles.successMessage}>Login successful!</p>}
       <p className={formStyles.title}>Sign In</p>
-      <label htmlFor="email" className={formStyles.inputLabel}>
-        Email
-        <input
-          id="email"
-          type="text"
-          placeholder="Email"
-          className={`${formStyles.input} ${errors.email ? formStyles.invalid : ''}`}
-          {...register('email')}
-          autoComplete="email"
-        />
-        {errors.email && <p className={formStyles.errorMessage}>{errors.email.message}</p>}
-      </label>
-      <label htmlFor="password" className={formStyles.inputLabel}>
-        Password
-        <input
-          id="password"
-          type="password"
+
+      <Form.Item label="Email" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
+        <FormController control={control} name="email" placeholder="Email address" autoComplete="email" />
+      </Form.Item>
+
+      <Form.Item label="Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
+        <FormController
+          control={control}
+          name="password"
           placeholder="Password"
-          className={`${formStyles.input} ${errors.password ? formStyles.invalid : ''}`}
-          {...register('password')}
-          autoComplete="new-password"
+          autoComplete="password"
+          type="password"
         />
-        {errors.password && <p className={formStyles.errorMessage}>{errors.password.message}</p>}
-      </label>
-      <button disabled={isSubmitting} type="submit" className={formStyles.button}>
-        {isSubmitting ? 'Loading...' : 'Login'}
-      </button>
-      {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
+      </Form.Item>
+
+      <Form.Item className={formStyles.submitButton}>
+        <Button disabled={isSubmitting} type="primary" htmlType="submit" block >
+          {isSubmitting ? 'Loading...' : 'Login'}
+        </Button>
+      </Form.Item>
+
+      {errors.root && <p className={formStyles.errorMessage}>{`${errors.root.type} ${errors.root.message}`}</p>}
       <div className={formStyles.auth}>
         <p className={formStyles.authText}>Don’t have an account? </p>
-        <CustomLink to="/sign-up" className={formStyles.authLink}>
+        <CustomButton to="/sign-up" className={formStyles.authLink}>
           Sign Up
-        </CustomLink>
+        </CustomButton>
       </div>
-    </form>
+    </Form>
   )
 }
 
 SignInForm.propTypes = {
-  register: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,

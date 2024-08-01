@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useCreateArticleMutation } from '../redux/ApiSlice'
 import articleSchema from '../utils/formsValidation/articleValidation'
-import NewArticleForm from '../components/Forms/NewArticleForm'
+import ArticleForm from '../components/Forms/ArticleForm'
 
 function NewArticlePage() {
   const [createArticle] = useCreateArticleMutation()
@@ -15,11 +15,10 @@ function NewArticlePage() {
   const navigate = useNavigate()
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     reset,
-    control,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(articleSchema),
@@ -61,11 +60,11 @@ function NewArticlePage() {
     }
   }
 
-  console.log('Form errors:', errors) 
+  console.log('Form errors:', errors)
 
   return (
-    <NewArticleForm
-      register={register}
+    <ArticleForm
+      control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       errors={errors}

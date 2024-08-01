@@ -10,7 +10,7 @@ const articleSchema = z.object({
   description: z
     .string()
     .min(1, 'Description cannot be empty')
-    .max(200, 'Description must be less than 200 characters'),
+    .max(400, 'Description must be less than 400 characters'),
   body: z.string().min(1, 'Body cannot be empty').max(5000, 'Text must be less than 5000 characters'),
   tags: z
     .array(

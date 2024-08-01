@@ -2,9 +2,10 @@ import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { uid } from 'uid'
 import { Popconfirm } from 'antd'
+import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 
 import MarkdownRenderer from '../../utils/markdownUtils'
-import CustomLink from '../CustomLink/CustomLink'
+import CustomButton from '../CustomButton/CustomButton'
 import {
   validateTitle,
   validateDescription,
@@ -13,8 +14,6 @@ import {
   validateUsername,
   truncateTag,
 } from '../../utils/articleValidation'
-import likeIconActive from '../../public/img/LikeIcon--active.svg'
-import likeIcon from '../../public/img/LikeIcon.svg'
 
 import articleStyles from './Article.module.scss'
 
@@ -44,7 +43,6 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
   const displayedTags = validatedTagList.slice(0, 4)
-  const like = favorited ? likeIconActive : likeIcon
 
   const handleClick = () => {
     if (favorited) {
@@ -59,15 +57,13 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
       <header className="article__header">
         <div className="article__info-left">
           <div className="article__title-favorites">
-            <CustomLink to={`/articles/${slug}`}>
+            <CustomButton to={`/articles/${slug}`}>
               <h5 className="article__title">{truncateText(validatedTitle, 70)}</h5>
-            </CustomLink>
-            <div className="article__favorites">
-              <CustomLink onClick={handleClick} className="like-link">
-                <img src={like} alt="like icon" className="like-icon" />
-              </CustomLink>
+            </CustomButton>
+            <CustomButton onClick={handleClick} className="like-container" type="text">
+              {favorited ? <HeartFilled className="red-like" /> : <HeartOutlined className="like" />}
               <p className="article__favorites-count">{favoritesCount}</p>
-            </div>
+            </CustomButton>
           </div>
           {displayedTags.length > 0 && (
             <div className="article__tags">
@@ -99,13 +95,13 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
                 cancelText="No"
                 placement="rightTop"
               >
-                <button type="button" className={articleStyles.deleteButton}>
+                <CustomButton danger className={articleStyles.deleteButton}>
                   Delete
-                </button>
+                </CustomButton>
               </Popconfirm>
-              <button type="button" className={articleStyles.editButton} onClick={handleEditClick}>
+              <CustomButton className={articleStyles.editButton} onClick={handleEditClick}>
                 Edit
-              </button>
+              </CustomButton>
             </>
           )}
         </div>

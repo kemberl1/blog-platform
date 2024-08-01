@@ -19,7 +19,7 @@ function EditProfilePage() {
   const navigate = useNavigate()
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     reset,
@@ -65,7 +65,7 @@ function EditProfilePage() {
 
   return (
     <EditProfileForm
-      register={register}
+      control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       errors={errors}
@@ -74,4 +74,5 @@ function EditProfilePage() {
     />
   )
 }
+
 export default EditProfilePage

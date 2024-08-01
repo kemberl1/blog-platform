@@ -15,8 +15,7 @@ const signUpSchema = z
     password: z
       .string()
       .min(6, 'Your password needs to be at least 6 characters.')
-      .max(20, 'Username must be at most 20 characters long')
-      .max(20, 'Username must be at most 20 characters long'),
+      .max(20, 'Password must be at most 20 characters long'),
     confirmPassword: z.string(),
     confirmCheckbox: z.boolean().refine((value) => value, {
       message: 'You must agree to the processing of your personal information',

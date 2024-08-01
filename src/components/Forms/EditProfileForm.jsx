@@ -1,74 +1,50 @@
 import PropTypes from 'prop-types'
+import { Form, Button } from 'antd'
+
+import FormController from '../FormController/FormController'
 
 import formStyles from './Forms.module.scss'
 
-function EditProfileForm({ register, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function EditProfileForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
   return (
-    <form className={formStyles.form} onSubmit={handleSubmit(onSubmit)}>
+    <Form layout="vertical" className={formStyles.form} onFinish={handleSubmit(onSubmit)}>
       <p className={formStyles.title}>Edit Profile</p>
       {isSuccess && <p className={formStyles.successMessage}>Edited successfully!</p>}
-      <label htmlFor="username" className={formStyles.inputLabel}>
-        User Name
-        <input
-          id="username"
-          type="text"
-          placeholder="User Name"
-          className={`${formStyles.input} ${errors.username ? formStyles.invalid : ''}`}
-          {...register('username')}
-          autoComplete="username"
-        />
-        {errors.username && <p className={formStyles.errorMessage}>{errors.username.message}</p>}
-      </label>
 
-      <label htmlFor="email" className={formStyles.inputLabel}>
-        Email Address
-        <input
-          id="email"
-          type="text"
-          placeholder="Email Address"
-          className={`${formStyles.input} ${errors.email ? formStyles.invalid : ''}`}
-          {...register('email')}
-          autoComplete="email"
-        />
-        {errors.email && <p className={formStyles.errorMessage}>{errors.email.message}</p>}
-      </label>
+      <Form.Item label="User Name" validateStatus={errors.username ? 'error' : ''} help={errors.username?.message}>
+        <FormController control={control} name="username" placeholder="User Name" autoComplete="username" />
+      </Form.Item>
 
-      <label htmlFor="password" className={formStyles.inputLabel}>
-        New Password
-        <input
-          id="password"
-          type="password"
+      <Form.Item label="Email Address" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
+        <FormController control={control} name="email" placeholder="Email Address" autoComplete="email" />
+      </Form.Item>
+
+      <Form.Item label="New Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
+        <FormController
+          control={control}
+          name="password"
           placeholder="New Password"
-          className={`${formStyles.input} ${errors.password ? formStyles.invalid : ''}`}
-          {...register('password')}
           autoComplete="new-password"
+          type="password"
         />
-        {errors.password && <p className={formStyles.errorMessage}>{errors.password.message}</p>}
-      </label>
+      </Form.Item>
 
-      <label htmlFor="image" className={formStyles.inputLabel}>
-        Avatar Image (URL)
-        <input
-          id="image"
-          type="text"
-          placeholder="Avatar Image (URL)"
-          className={`${formStyles.input} ${errors.image ? formStyles.invalid : ''}`}
-          {...register('image')}
-        />
-        {errors.image && <p className={formStyles.errorMessage}>{errors.image.message}</p>}
-      </label>
+      <Form.Item label="Avatar Image (URL)" validateStatus={errors.image ? 'error' : ''} help={errors.image?.message}>
+        <FormController control={control} name="image" placeholder="Avatar Image (URL)" />
+      </Form.Item>
 
-      <button disabled={isSubmitting} type="submit" className={formStyles.button}>
-        {isSubmitting ? 'Loading...' : 'Save'}
-      </button>
+      <Form.Item>
+        <Button disabled={isSubmitting} type="primary" htmlType="submit" className={formStyles.button} block>
+          {isSubmitting ? 'Loading...' : 'Save'}
+        </Button>
+      </Form.Item>
 
       {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
-    </form>
+    </Form>
   )
 }
 
 EditProfileForm.propTypes = {
-  register: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,

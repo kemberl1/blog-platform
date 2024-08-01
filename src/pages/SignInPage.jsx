@@ -19,16 +19,22 @@ function SignInPage() {
   const navigate = useNavigate()
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   const onSubmit = async (data) => {
+    console.log('sign in data', data)
+    console.log('sign in errors', errors)
     setIsSubmitting(true)
     try {
       const response = await loginUser(data).unwrap()
@@ -42,9 +48,13 @@ function SignInPage() {
       }, 2000)
     } catch (error) {
       if (error?.data?.errors) {
-        Object.entries(error.data.errors).forEach(([field, message]) => {
-          setError('root', { type: 'manual', message: `${field} ${message}` })
-        })
+        const errorEntries = Object.entries(error.data.errors)
+        if (errorEntries.length > 0) {
+          const [field, message] = errorEntries[0]
+          setError('root', { type: field, message })
+        } else {
+          setError('root', { type: 'manual', message: 'Login failed' })
+        }
       } else {
         setError('root', { type: 'manual', message: 'Login failed' })
       }
@@ -55,7 +65,7 @@ function SignInPage() {
 
   return (
     <SignInForm
-      register={register}
+      control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       errors={errors}

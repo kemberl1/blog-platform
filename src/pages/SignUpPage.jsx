@@ -18,14 +18,24 @@ function SignUpPage() {
   const location = useLocation()
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     reset,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(signUpSchema) })
-
+  } = useForm({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      confirmCheckbox: false,
+    },
+  })
   const onSubmit = async (data) => {
+    console.log('sign up data', data)
+    console.log(errors)
     setIsSubmitting(true)
     try {
       const response = await registerUser(data).unwrap()
@@ -34,9 +44,7 @@ function SignUpPage() {
       localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
       setIsSuccess(true)
-      setTimeout(() => {
-        navigate(location.state?.from || '/', { replace: true })
-      }, 2000)
+      navigate(location.state?.from || '/', { replace: true })
     } catch (error) {
       if (error?.data?.errors) {
         Object.entries(error.data.errors).forEach(([field, message]) => {
@@ -52,7 +60,7 @@ function SignUpPage() {
 
   return (
     <SignUpForm
-      register={register}
+      control={control}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
       errors={errors}

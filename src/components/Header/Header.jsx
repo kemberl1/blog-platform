@@ -1,37 +1,37 @@
 import PropTypes from 'prop-types'
 
-import CustomLink from '../CustomLink/CustomLink'
+import CustomButton from '../CustomButton/CustomButton'
 
 function Header({ user, onSignOut }) {
   const defaultAvatar = 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
   return (
     <header className="header">
-      <CustomLink to="/articles" className="header__title">
+      <CustomButton to="/articles" className="header__title">
         Realworld Blog
-      </CustomLink>
+      </CustomButton>
 
       {user ? (
         <>
-          <CustomLink to="/new-article" className="button-create custom-link">
+          <CustomButton to="/new-article" className="button-create">
             Create Article
-          </CustomLink>
-          <CustomLink to="/profile" className="header__user-info">
+          </CustomButton>
+          <CustomButton to="/profile" className="header__user-info">
             <img src={user.image || defaultAvatar} alt="User Avatar" className="header__avatar" />
             <span className="header__username">{user.username}</span>
-          </CustomLink>
-          <CustomLink onClick={onSignOut} className="button-auth custom-link">
+          </CustomButton>
+          <CustomButton onClick={onSignOut} className="button-auth">
             Log Out
-          </CustomLink>
+          </CustomButton>
         </>
       ) : (
         <div className="header__auth-buttons">
-          <CustomLink to="/sign-in" className="button-login">
+          <CustomButton to="/sign-in" className="sign-in">
             Sign In
-          </CustomLink>
-          <CustomLink to="/sign-up" className="button-auth custom-link sign-up">
+          </CustomButton>
+          <CustomButton to="/sign-up" className="sign-up">
             Sign Up
-          </CustomLink>
+          </CustomButton>
         </div>
       )}
     </header>
