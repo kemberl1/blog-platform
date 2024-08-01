@@ -6,13 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useUpdateArticleMutation, useGetArticleQuery } from '../redux/ApiSlice'
 import articleSchema from '../utils/formsValidation/articleValidation'
 import ArticleForm from '../components/Forms/ArticleForm'
+import showErrorNotification from '../utils/notifications/showErrorNotification'
 
 function EditArticlePage() {
   const { slug } = useParams()
   const { data: article, error: fetchError, isLoading: isFetching, refetch } = useGetArticleQuery(slug)
   const [updateArticle] = useUpdateArticleMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
 
   const navigate = useNavigate()
 
@@ -49,7 +49,6 @@ function EditArticlePage() {
   }, [article, reset])
 
   const onSubmit = async (data) => {
-		console.log('new article data', data)
     setIsSubmitting(true)
     try {
       const articleData = {
@@ -61,11 +60,11 @@ function EditArticlePage() {
       await updateArticle({ slug, article: articleData }).unwrap()
       setIsSuccess(true)
       refetch()
-      setTimeout(() => {
-        navigate(`/articles/${slug}`, { replace: true })
-      }, 2000)
+      navigate(`/articles/${slug}`, { replace: true })
     } catch (error) {
-      if (error?.data?.errors) {
+      if (error.originalStatus === 403) {
+        showErrorNotification('articleEditError', 'error')
+      } else if (error?.data?.errors) {
         Object.entries(error.data.errors).forEach(([field, message]) => {
           setError('root', { type: 'manual', message: `${field} ${message}` })
         })
@@ -87,7 +86,6 @@ function EditArticlePage() {
       onSubmit={onSubmit}
       errors={errors}
       isSubmitting={isSubmitting}
-      isSuccess={isSuccess}
       fields={fields}
       append={append}
       remove={remove}

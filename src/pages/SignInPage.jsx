@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import showSuccessNotification from '../utils/notifications/showSuccessNotification'
 import { useLoginUserMutation } from '../redux/ApiSlice'
 import { setUser } from '../redux/userSlice'
 import signInSchema from '../utils/formsValidation/signInValidation'
@@ -13,7 +14,6 @@ function SignInPage() {
   const dispatch = useDispatch()
   const [loginUser] = useLoginUserMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -33,8 +33,6 @@ function SignInPage() {
   })
 
   const onSubmit = async (data) => {
-    console.log('sign in data', data)
-    console.log('sign in errors', errors)
     setIsSubmitting(true)
     try {
       const response = await loginUser(data).unwrap()
@@ -42,10 +40,8 @@ function SignInPage() {
       dispatch(setUser({ user, token: user.token }))
       localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
-      setIsSuccess(true)
-      setTimeout(() => {
-        navigate(location.state?.from?.pathname || '/', { replace: true })
-      }, 2000)
+      showSuccessNotification('signInSuccess', user.username)
+      navigate(location.state?.from?.pathname || '/', { replace: true })
     } catch (error) {
       if (error?.data?.errors) {
         const errorEntries = Object.entries(error.data.errors)
@@ -70,7 +66,6 @@ function SignInPage() {
       onSubmit={onSubmit}
       errors={errors}
       isSubmitting={isSubmitting}
-      isSuccess={isSuccess}
     />
   )
 }

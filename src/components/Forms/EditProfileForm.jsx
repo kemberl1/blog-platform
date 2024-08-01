@@ -5,11 +5,10 @@ import FormController from '../FormController/FormController'
 
 import formStyles from './Forms.module.scss'
 
-function EditProfileForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function EditProfileForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
   return (
     <Form layout="vertical" className={formStyles.form} onFinish={handleSubmit(onSubmit)}>
       <p className={formStyles.title}>Edit Profile</p>
-      {isSuccess && <p className={formStyles.successMessage}>Edited successfully!</p>}
 
       <Form.Item label="User Name" validateStatus={errors.username ? 'error' : ''} help={errors.username?.message}>
         <FormController control={control} name="username" placeholder="User Name" autoComplete="username" />

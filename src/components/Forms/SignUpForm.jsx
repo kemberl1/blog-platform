@@ -7,7 +7,7 @@ import CustomButton from '../CustomButton/CustomButton'
 
 import formStyles from './Forms.module.scss'
 
-function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
   return (
     <Form
       layout="vertical"
@@ -15,7 +15,6 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isS
       onFinish={handleSubmit(onSubmit)}
     >
       <p className={formStyles.title}>Create a new account</p>
-      {isSuccess && <p className={formStyles.successMessage}>Registration successful!</p>}
 
       <Form.Item label="Username" validateStatus={errors.username ? 'error' : ''} help={errors.username?.message}>
         <FormController control={control} name="username" placeholder="Username" autoComplete="username" />

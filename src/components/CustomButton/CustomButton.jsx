@@ -23,7 +23,6 @@ function CustomButton({ children = {}, to = null, ...props }) {
 CustomButton.propTypes = {
   children: PropTypes.node.isRequired,
   to: PropTypes.string,
-  type: PropTypes.oneOf(['default', 'link', 'primary']),
 }
 
 export default CustomButton

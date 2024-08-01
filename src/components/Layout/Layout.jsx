@@ -1,11 +1,20 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
 
+import showSuccessNotification from '../../utils/notifications/showSuccessNotification'
 import { setUser, logout } from '../../redux/userSlice'
 import Header from '../Header/Header'
 import AuthNotification from '../AuthNotification/AuthNotification'
+
+const hasShownSignInSuccess = () => {
+  const shown = localStorage.getItem('signInSuccessShown')
+  return shown === 'true'
+}
+
+const setSignInSuccessShown = () => {
+  localStorage.setItem('signInSuccessShown', 'true')
+}
 
 function Layout() {
   const dispatch = useDispatch()
@@ -17,14 +26,18 @@ function Layout() {
     if (userData) {
       const { user, token } = JSON.parse(userData)
       dispatch(setUser({ user, token }))
-      toast.success(`Welcome back ${user.username}!`)
+      if (!hasShownSignInSuccess()) {
+        showSuccessNotification('signInSuccess', user.username)
+        setSignInSuccessShown()
+      }
     }
   }, [dispatch])
 
   const handleSignOut = () => {
     dispatch(logout())
     localStorage.removeItem('user')
-    toast.info('You have successfully loged out. ')
+    localStorage.removeItem('signInSuccessShown')
+    showSuccessNotification('logOutSuccess')
     navigate('/sign-in', { replace: true })
   }
 

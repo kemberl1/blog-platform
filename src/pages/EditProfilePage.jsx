@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
+import showSuccessNotification from '../utils/notifications/showSuccessNotification'
 import { useUpdateUserMutation } from '../redux/ApiSlice'
 import { updateUser } from '../redux/userSlice'
 import editProfileSchema from '../utils/formsValidation/editProfileValidation'
@@ -12,7 +13,6 @@ import EditProfileForm from '../components/Forms/EditProfileForm'
 function EditProfilePage() {
   const [updateUserApi] = useUpdateUserMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
   const dispatch = useDispatch()
   const userInfo = useSelector((state) => state.user.user)
   const location = useLocation()
@@ -47,10 +47,8 @@ function EditProfilePage() {
       dispatch(updateUser(user))
       localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
-      setIsSuccess(true)
-      setTimeout(() => {
-        navigate(location.state?.from?.pathname || '/', { replace: true })
-      }, 2000)
+      showSuccessNotification('updateProfileSuccess')
+      navigate(location.state?.from?.pathname || '/', { replace: true })
     } catch (error) {
       if (error?.data?.errors) {
         const errorMessage = error.data.errors.message || 'Update failed'
@@ -70,7 +68,6 @@ function EditProfilePage() {
       onSubmit={onSubmit}
       errors={errors}
       isSubmitting={isSubmitting}
-      isSuccess={isSuccess}
     />
   )
 }

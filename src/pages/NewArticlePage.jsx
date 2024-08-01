@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import showSuccessNotification from '../utils/notifications/showSuccessNotification'
 import { useCreateArticleMutation } from '../redux/ApiSlice'
 import articleSchema from '../utils/formsValidation/articleValidation'
 import ArticleForm from '../components/Forms/ArticleForm'
@@ -10,7 +11,6 @@ import ArticleForm from '../components/Forms/ArticleForm'
 function NewArticlePage() {
   const [createArticle] = useCreateArticleMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
 
   const navigate = useNavigate()
 
@@ -22,6 +22,12 @@ function NewArticlePage() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(articleSchema),
+    defaultValues: {
+      title: '',
+      description: '',
+      body: '',
+      tags: [],
+    },
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -30,7 +36,6 @@ function NewArticlePage() {
   })
 
   const onSubmit = async (data) => {
-    console.log('new article data', data)
     setIsSubmitting(true)
     try {
       const articleData = {
@@ -39,15 +44,11 @@ function NewArticlePage() {
         body: data.body,
         tagList: data.tags.map((tag) => tag.value).filter((value) => value.trim() !== ''),
       }
-      const response = await createArticle(articleData).unwrap()
-      console.log('Article created:', response)
+      await createArticle(articleData).unwrap()
       reset()
-      setIsSuccess(true)
-      setTimeout(() => {
-        navigate('/', { replace: true })
-      }, 2000)
+      showSuccessNotification('createArticleSuccess')
+      navigate('/', { replace: true })
     } catch (error) {
-      console.error('Error creating article:', error)
       if (error?.data?.errors) {
         Object.entries(error.data.errors).forEach(([field, message]) => {
           setError('root', { type: 'manual', message: `${field} ${message}` })
@@ -60,8 +61,6 @@ function NewArticlePage() {
     }
   }
 
-  console.log('Form errors:', errors)
-
   return (
     <ArticleForm
       control={control}
@@ -69,7 +68,6 @@ function NewArticlePage() {
       onSubmit={onSubmit}
       errors={errors}
       isSubmitting={isSubmitting}
-      isSuccess={isSuccess}
       fields={fields}
       append={append}
       remove={remove}

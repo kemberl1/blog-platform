@@ -8,7 +8,7 @@ import formStyles from './Forms.module.scss'
 
 const { TextArea } = Input
 
-function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess, fields, append, remove }) {
+function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  fields, append, remove }) {
   const addButton = (
     <Button className={formStyles.addButton} onClick={() => append({ value: '' })} block>
       Add Tag
@@ -23,7 +23,6 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, is
       style={{ width: '100%' }}
     >
       <p className={formStyles.title}>Edit article</p>
-      {isSuccess && <p className={formStyles.successMessage}>Edited successfully!</p>}
 
       <Form.Item label="Title" validateStatus={errors.title ? 'error' : ''} help={errors.title?.message}>
         <FormController control={control} name="title" placeholder="Title" />
@@ -81,14 +80,16 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, is
           ))}
         </div>
       </Form.Item>
-
-      <Form.Item className={formStyles.submitButton}>
-        <Button disabled={isSubmitting} type="primary" htmlType="submit" block>
+      {errors.root && (
+        <p className={formStyles.errorMessage} style={{ textAlign: 'left' }}>
+          {errors.root.message}
+        </p>
+      )}
+      <Form.Item>
+        <Button disabled={isSubmitting} type="primary" htmlType="submit" block className={formStyles.submitButton}>
           {isSubmitting ? 'Sending...' : 'Send'}
         </Button>
       </Form.Item>
-
-      {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
     </Form>
   )
 }

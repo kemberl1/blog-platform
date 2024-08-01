@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
+import showSuccessNotification from '../utils/notifications/showSuccessNotification'
 import signUpSchema from '../utils/formsValidation/signUpValidation'
 import { setUser } from '../redux/userSlice'
 import { useRegisterUserMutation } from '../redux/ApiSlice'
@@ -13,7 +14,6 @@ function SignUpPage() {
   const dispatch = useDispatch()
   const [registerUser] = useRegisterUserMutation()
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -34,8 +34,6 @@ function SignUpPage() {
     },
   })
   const onSubmit = async (data) => {
-    console.log('sign up data', data)
-    console.log(errors)
     setIsSubmitting(true)
     try {
       const response = await registerUser(data).unwrap()
@@ -43,7 +41,7 @@ function SignUpPage() {
       dispatch(setUser({ user, token: user.token }))
       localStorage.setItem('user', JSON.stringify({ user, token: user.token }))
       reset()
-      setIsSuccess(true)
+      showSuccessNotification('signUpSuccess', user.username)
       navigate(location.state?.from || '/', { replace: true })
     } catch (error) {
       if (error?.data?.errors) {
@@ -65,7 +63,6 @@ function SignUpPage() {
       onSubmit={onSubmit}
       errors={errors}
       isSubmitting={isSubmitting}
-      isSuccess={isSuccess}
     />
   )
 }

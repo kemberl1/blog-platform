@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import { useGetArticleQuery } from '../redux/ApiSlice'
 import Article from '../components/Article/Article'
@@ -8,6 +9,7 @@ import useArticleActions from '../hooks/useArticleActions'
 
 function SingleArticlePage() {
   const { slug } = useParams()
+  const user = useSelector((state) => state.user.user)
   const { data, isLoading, error, refetch } = useGetArticleQuery(slug)
   const { handleLike, handleUnlike, handleDelete, handleEditClick } = useArticleActions()
 
@@ -22,8 +24,8 @@ function SingleArticlePage() {
       showBody
       handleEditClick={() => handleEditClick(slug)}
       handleDelete={() => handleDelete(slug)}
-      handleLike={() => handleLike(slug, refetch)}
-      handleUnlike={() => handleUnlike(slug, refetch)}
+      handleLike={() => handleLike(slug, refetch, user)}
+      handleUnlike={() => handleUnlike(slug, refetch, user)}
     />
   ) : null
 }

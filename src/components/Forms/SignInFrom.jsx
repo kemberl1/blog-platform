@@ -7,14 +7,13 @@ import CustomButton from '../CustomButton/CustomButton'
 
 import formStyles from './Forms.module.scss'
 
-function SignInForm({ control, handleSubmit, onSubmit, errors, isSubmitting, isSuccess }) {
+function SignInForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
   return (
     <Form
       layout="vertical"
       className={classNames(formStyles.form, 'edit-article-form')}
       onFinish={handleSubmit(onSubmit)}
     >
-      {isSuccess && <p className={formStyles.successMessage}>Login successful!</p>}
       <p className={formStyles.title}>Sign In</p>
 
       <Form.Item label="Email" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
