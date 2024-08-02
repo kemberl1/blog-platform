@@ -98,7 +98,6 @@ ArticleForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
-  isSuccess: PropTypes.bool.isRequired,
   append: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
 }

@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 
 import { useDeleteArticleMutation, useLikeArticleMutation, useUnlikeArticleMutation } from '../redux/ApiSlice'
 import showErrorNotification from '../utils/notifications/showErrorNotification'
-import showSuccessNotification from '../utils/notifications/showSuccessNotification'
 
 const useArticleActions = () => {
   const navigate = useNavigate()
@@ -45,7 +44,6 @@ const useArticleActions = () => {
     }
     try {
       await deleteArticle(slug).unwrap()
-      showSuccessNotification('deleteArticleSuccess')
       navigate('/', { replace: true })
     } catch (e) {
       if (e.originalStatus === 403) {

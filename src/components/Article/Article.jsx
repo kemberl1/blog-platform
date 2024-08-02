@@ -1,4 +1,3 @@
-// Article.js
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { uid } from 'uid'
