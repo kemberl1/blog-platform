@@ -1,10 +1,13 @@
 .header {
+  @media (max-width: 320px ) {
+    justify-content: center;
+    row-gap: 10px;
+  }
   background-color: $background-color-base;
   font-family: $Inter-Regular;
   display: flex;
-	flex-wrap: wrap;
   column-gap: 27px;
-  justify-content: end;
+	flex-wrap: wrap;
   padding: 0 22px;
   min-height: 80px;
   color: $header-color;
@@ -12,7 +15,10 @@
   line-height: 28px;
   align-items: center;
   &__title {
-    margin: 0;
+    @media (max-width: 320px ) {
+      margin-right: 0;
+    }
+    line-height: 28px;
     margin-right: auto;
     &:hover {
       color: grey;
@@ -54,12 +60,13 @@
 }
 
 .button-auth {
-  padding: 6px 18px;
+  display: block;
+  padding: 0 22px;
   font-size: 18px;
   color: inherit;
   border-color: inherit;
   color: $text-color;
-	min-height: 61px;
+  height: 51px;
   &:hover,
   &:focus {
     color: grey !important;

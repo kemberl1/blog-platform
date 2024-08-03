@@ -9,6 +9,7 @@ import EditProfilePage from '../pages/EditProfilePage'
 import NewArticlePage from '../pages/NewArticlePage'
 import EditArticlePage from '../pages/EditArticlePage'
 import RequireAuth from '../hoc/RequireAuth'
+import NotFoundPage from '../pages/NotFoundPage'
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
       },
+      {
+        path: '*',
+        element: <NotFoundPage/>
+      }
     ],
   },
 ])

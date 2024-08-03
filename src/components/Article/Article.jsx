@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { uid } from 'uid'
 import { Popconfirm } from 'antd'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
-
+import { useSelector } from 'react-redux'
 import MarkdownRenderer from '../../utils/markdownUtils'
 import CustomButton from '../CustomButton/CustomButton'
 import {
@@ -22,6 +22,8 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
     return null
   }
 
+  const user = useSelector((state) => state.user.user)
+  
   const {
     title = '',
     description = '',
@@ -86,7 +88,7 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
       <div className="article__text">
         <div className="article__text-container">
           <p className="article__text-description">{truncateText(validatedDescription)}</p>
-          {showBody && (
+          {showBody && user && (
             <>
               <Popconfirm
                 title="Are you sure to delete this article?"

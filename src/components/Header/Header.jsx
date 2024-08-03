@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import CustomButton from '../CustomButton/CustomButton'
 
-function Header({ user, onSignOut }) {
+function Header({ user = {}, onSignOut }) {
   const defaultAvatar = 'https://static.productionready.io/images/smiley-cyrus.jpg'
 
   return (
@@ -42,7 +42,7 @@ Header.propTypes = {
   user: PropTypes.shape({
     username: PropTypes.string.isRequired,
     image: PropTypes.string,
-  }).isRequired,
+  }),
   onSignOut: PropTypes.func.isRequired,
 }
 
