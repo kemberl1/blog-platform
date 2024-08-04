@@ -2,6 +2,7 @@ import { Controller } from 'react-hook-form'
 import { Input, Checkbox } from 'antd'
 
 const { TextArea } = Input
+
 function FormController({
   control,
   name,
@@ -12,6 +13,7 @@ function FormController({
   className,
   autoSize,
   id,
+  disabled,
 }) {
   return (
     <Controller
@@ -25,15 +27,24 @@ function FormController({
               onChange={(e) => field.onChange(e.target.checked)}
               className={className}
               id={id}
+              disabled={disabled}
             />
           )
         }
         if (type === 'password') {
-          return <Input.Password placeholder={placeholder} autoComplete={autoComplete} {...field} />
+          return <Input.Password placeholder={placeholder} autoComplete={autoComplete} {...field} disabled={disabled} />
         }
 
         if (as === TextArea) {
-          return <TextArea placeholder={placeholder} {...field} className={className} autoSize={autoSize} />
+          return (
+            <TextArea
+              placeholder={placeholder}
+              {...field}
+              className={className}
+              autoSize={autoSize}
+              disabled={disabled}
+            />
+          )
         }
 
         return (
@@ -45,6 +56,7 @@ function FormController({
             onChange={field.onChange}
             onBlur={field.onBlur}
             className={className}
+            disabled={disabled}
           />
         )
       }}

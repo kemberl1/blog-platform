@@ -8,7 +8,7 @@ import formStyles from './Forms.module.scss'
 
 const { TextArea } = Input
 
-function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  fields, append, remove }) {
+function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, fields, append, remove }) {
   const addButton = (
     <Button className={formStyles.addButton} onClick={() => append({ value: '' })} block>
       Add Tag
@@ -22,10 +22,10 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  f
       onFinish={handleSubmit(onSubmit)}
       style={{ width: '100%' }}
     >
-      <p className={formStyles.title}>Edit article</p>
+      <p className={formStyles.title}>Create new article</p>
 
       <Form.Item label="Title" validateStatus={errors.title ? 'error' : ''} help={errors.title?.message}>
-        <FormController control={control} name="title" placeholder="Title" />
+        <FormController control={control} name="title" placeholder="Title" disabled={isSubmitting} />
       </Form.Item>
 
       <Form.Item
@@ -39,6 +39,7 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  f
           placeholder="Short description"
           as={TextArea}
           autoSize={{ minRows: 1, maxRows: 4 }}
+          disabled={isSubmitting}
         />
       </Form.Item>
 
@@ -49,6 +50,7 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  f
           placeholder="Text"
           as={TextArea}
           autoSize={{ minRows: 5, maxRows: 200 }}
+          disabled={isSubmitting}
         />
       </Form.Item>
 
@@ -62,6 +64,7 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting,  f
                 name={`tags.${index}.value`}
                 placeholder="Tag"
                 className={formStyles.tagInput}
+                disabled={isSubmitting}
               />
               <Button
                 danger

@@ -1,4 +1,5 @@
 import { Pagination } from 'antd'
+import './CustomPagination.module.scss'
 
 function CustomPagination({ currentPage, totalCount, pageSize, onPageChange, className }) {
   return (
@@ -8,7 +9,7 @@ function CustomPagination({ currentPage, totalCount, pageSize, onPageChange, cla
       pageSize={pageSize}
       onChange={onPageChange}
       showSizeChanger={false}
-      className={className}
+      className={`${className} custom-pagination`}
     />
   )
 }

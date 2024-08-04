@@ -17,7 +17,13 @@ function SignInForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
       <p className={formStyles.title}>Sign In</p>
 
       <Form.Item label="Email" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
-        <FormController control={control} name="email" placeholder="Email address" autoComplete="email" />
+        <FormController
+          control={control}
+          name="email"
+          placeholder="Email address"
+          autoComplete="email"
+          disabled={isSubmitting}
+        />
       </Form.Item>
 
       <Form.Item label="Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
@@ -27,11 +33,12 @@ function SignInForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
           placeholder="Password"
           autoComplete="password"
           type="password"
+          disabled={isSubmitting}
         />
       </Form.Item>
 
       <Form.Item className={formStyles.submitButton}>
-        <Button disabled={isSubmitting} type="primary" htmlType="submit" block >
+        <Button disabled={isSubmitting} type="primary" htmlType="submit" block>
           {isSubmitting ? 'Loading...' : 'Login'}
         </Button>
       </Form.Item>

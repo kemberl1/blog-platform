@@ -58,7 +58,6 @@ function EditArticlePage() {
         tagList: data.tags.map((tag) => tag.value).filter((value) => value.trim() !== ''),
       }
       await updateArticle({ slug, article: articleData }).unwrap()
-      setIsSuccess(true)
       refetch()
       navigate(`/articles/${slug}`, { replace: true })
     } catch (error) {

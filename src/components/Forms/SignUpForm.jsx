@@ -14,14 +14,26 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
       className={classNames(formStyles.form, 'edit-article-form')}
       onFinish={handleSubmit(onSubmit)}
     >
-      <p className={formStyles.title}>Create a new account</p>
+      <p className={formStyles.title}>Create new account</p>
 
       <Form.Item label="Username" validateStatus={errors.username ? 'error' : ''} help={errors.username?.message}>
-        <FormController control={control} name="username" placeholder="Username" autoComplete="username" />
+        <FormController
+          control={control}
+          name="username"
+          placeholder="Username"
+          autoComplete="username"
+          disabled={isSubmitting}
+        />
       </Form.Item>
 
       <Form.Item label="Email" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
-        <FormController control={control} name="email" placeholder="Email address" autoComplete="email" />
+        <FormController
+          control={control}
+          name="email"
+          placeholder="Email address"
+          autoComplete="email"
+          disabled={isSubmitting}
+        />
       </Form.Item>
 
       <Form.Item label="Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
@@ -31,6 +43,7 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
           placeholder="Password"
           autoComplete="new-password"
           type="password"
+          disabled={isSubmitting}
         />
       </Form.Item>
 
@@ -45,6 +58,7 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
           placeholder="Password"
           autoComplete="new-password"
           type="password"
+          disabled={isSubmitting}
         />
       </Form.Item>
 
@@ -58,6 +72,7 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
             type="checkbox"
             className={formStyles.checkInput}
             id="confirmCheckbox"
+            disabled={isSubmitting}
           />
           I agree to the processing of my personal information
         </label>
@@ -70,7 +85,7 @@ function SignUpForm({ control, handleSubmit, onSubmit, errors, isSubmitting }) {
         </Button>
       </Form.Item>
 
-      {errors.apiError && <p className={formStyles.errorMessage}>{errors.apiError.message}</p>}
+      {errors.root && <p className={formStyles.errorMessage}>{errors.root.message}</p>}
 
       <div className={formStyles.auth}>
         <p className={formStyles.authText}>Already have an account? </p>

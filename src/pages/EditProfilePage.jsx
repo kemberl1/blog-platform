@@ -51,8 +51,12 @@ function EditProfilePage() {
       navigate(location.state?.from?.pathname || '/', { replace: true })
     } catch (error) {
       if (error?.data?.errors) {
-        const errorMessage = error.data.errors.message || 'Update failed'
-        setError('root', { type: 'manual', message: errorMessage })
+        Object.keys(error.data.errors).forEach((field) => {
+          setError(field, {
+            type: 'manual',
+            message: error.data.errors[field],
+          })
+        })
       } else {
         setError('root', { type: 'manual', message: 'Update failed' })
       }

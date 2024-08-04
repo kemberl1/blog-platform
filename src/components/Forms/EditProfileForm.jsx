@@ -11,11 +11,23 @@ function EditProfileForm({ control, handleSubmit, onSubmit, errors, isSubmitting
       <p className={formStyles.title}>Edit Profile</p>
 
       <Form.Item label="User Name" validateStatus={errors.username ? 'error' : ''} help={errors.username?.message}>
-        <FormController control={control} name="username" placeholder="User Name" autoComplete="username" />
+        <FormController
+          control={control}
+          name="username"
+          placeholder="User Name"
+          autoComplete="username"
+          disabled={isSubmitting}
+        />
       </Form.Item>
 
       <Form.Item label="Email Address" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
-        <FormController control={control} name="email" placeholder="Email Address" autoComplete="email" />
+        <FormController
+          control={control}
+          name="email"
+          placeholder="Email Address"
+          autoComplete="email"
+          disabled={isSubmitting}
+        />
       </Form.Item>
 
       <Form.Item label="New Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
@@ -25,11 +37,12 @@ function EditProfileForm({ control, handleSubmit, onSubmit, errors, isSubmitting
           placeholder="New Password"
           autoComplete="new-password"
           type="password"
+          disabled={isSubmitting}
         />
       </Form.Item>
 
       <Form.Item label="Avatar Image (URL)" validateStatus={errors.image ? 'error' : ''} help={errors.image?.message}>
-        <FormController control={control} name="image" placeholder="Avatar Image (URL)" />
+        <FormController control={control} name="image" placeholder="Avatar Image (URL)" disabled={isSubmitting} />
       </Form.Item>
 
       <Form.Item>
