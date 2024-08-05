@@ -1,3 +1,10 @@
-.custom-pagination {
-  justify-content: center;
-}
+ .ant-pagination-item-active a{
+    color: white !important; 
+  }
+
+  .ant-pagination-item-active {
+    color: white !important; 
+    &:hover{
+      background-color: darken(rgb(24, 144, 255), 10%);
+    }
+  }

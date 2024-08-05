@@ -3,7 +3,7 @@ export const validateTitle = (title) => (title?.trim().length ? title : 'No titl
 export const validateDescription = (description) =>
   description?.trim().length ? description : 'No description available'
 
-export function truncateText(description, maxLength = 260) {
+export function truncateText(description, maxLength = 400) {
   if (description.length > maxLength) {
     return `${description.substring(0, maxLength - 3)}...`
   }

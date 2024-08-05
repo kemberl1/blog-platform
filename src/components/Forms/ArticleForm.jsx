@@ -9,8 +9,19 @@ import formStyles from './Forms.module.scss'
 const { TextArea } = Input
 
 function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, fields, append, remove }) {
+  const isTagLimitReached = fields.length >= 5;
+
   const addButton = (
-    <Button className={formStyles.addButton} onClick={() => append({ value: '' })} block>
+    <Button
+      className={formStyles.addButton}
+      onClick={() => {
+        if (fields.length < 5) {
+          append({ value: '' })
+        }
+      }}
+      block
+      disabled={isTagLimitReached}
+    >
       Add Tag
     </Button>
   )
@@ -81,6 +92,7 @@ function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, fi
               )}
             </div>
           ))}
+          {isTagLimitReached && <p className={formStyles.errorMessage}>You can add up to 5 tags</p>}
         </div>
       </Form.Item>
       {errors.root && (

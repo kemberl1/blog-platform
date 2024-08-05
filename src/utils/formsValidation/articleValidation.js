@@ -18,8 +18,9 @@ const articleSchema = z.object({
         value: z.string().min(1, 'Tag cannot be empty').max(25, 'Tag must be less than 25 characters'),
       })
     )
+    .max(5, 'You can add up to 5 tags')
     .optional()
-    .refine(uniqueTags, { message: 'Tags must be unique' }),
+    .refine(uniqueTags, { message: 'Tags must be unique' })
 })
 
 export default articleSchema

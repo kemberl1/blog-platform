@@ -44,7 +44,7 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
   const validatedUsername = validateUsername(username)
 
   const formattedDate = format(new Date(createdAt), 'MMMM d, yyyy')
-  const displayedTags = validatedTagList.slice(0, 4)
+  const displayedTags = validatedTagList.slice(0, 5)
 
   const handleClick = () => {
     if (favorited) {
