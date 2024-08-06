@@ -1,4 +1,3 @@
-// ArticlesPage.js
 import { scroller } from 'react-scroll'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'

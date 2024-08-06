@@ -6,6 +6,7 @@ import showSuccessNotification from '../../utils/notifications/showSuccessNotifi
 import { setUser, logout } from '../../redux/userSlice'
 import Header from '../Header/Header'
 import AuthNotification from '../AuthNotification/AuthNotification'
+import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton'
 
 const hasShownSignInSuccess = () => {
   const shown = localStorage.getItem('signInSuccessShown')
@@ -46,6 +47,7 @@ function Layout() {
       <AuthNotification />
       <Header user={loggedInUser} onSignOut={handleSignOut} />
       <main className="main-content">
+        <ScrollToTopButton/>
         <Outlet />
       </main>
     </div>
