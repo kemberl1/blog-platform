@@ -32,14 +32,25 @@ function FormController({
           )
         }
         if (type === 'password') {
-          return <Input.Password placeholder={placeholder} autoComplete={autoComplete} {...field} disabled={disabled} />
+          return (
+            <Input.Password
+              placeholder={placeholder}
+              autoComplete={autoComplete}
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+              disabled={disabled}
+            />
+          )
         }
 
         if (as === TextArea) {
           return (
             <TextArea
               placeholder={placeholder}
-              {...field}
+              value={field.value}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
               className={className}
               autoSize={autoSize}
               disabled={disabled}

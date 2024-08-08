@@ -40,7 +40,7 @@ function ArticlesPage() {
         totalCount={data?.articlesCount || 0}
         pageSize={10}
         onPageChange={handlePageChange}
-        className="pagination"
+        className="custom-pagination"
       />
     </>
   )

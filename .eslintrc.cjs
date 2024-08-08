@@ -45,6 +45,7 @@ module.exports = {
         'newlines-between': 'always', // Пустые строки между группами импортов
       },
     ],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state'] }], // Игнорирование изменений свойств параметра state
   },
   settings: {
     react: {

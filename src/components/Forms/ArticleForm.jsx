@@ -9,7 +9,7 @@ import formStyles from './Forms.module.scss'
 const { TextArea } = Input
 
 function ArticleForm({ control, handleSubmit, onSubmit, errors, isSubmitting, fields, append, remove }) {
-  const isTagLimitReached = fields.length >= 5;
+  const isTagLimitReached = fields.length >= 5
 
   const addButton = (
     <Button
