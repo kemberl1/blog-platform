@@ -1,9 +1,11 @@
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { uid } from 'uid'
-import { Popconfirm } from 'antd'
 import { HeartOutlined, HeartFilled } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+
+import CustomPopconfirm from '../CustomPopconfirm/CustomPopconfirm'
 import MarkdownRenderer from '../../utils/markdownUtils'
 import CustomButton from '../CustomButton/CustomButton'
 import {
@@ -18,12 +20,12 @@ import {
 import articleStyles from './Article.module.scss'
 
 function Article({ article, showBody = false, handleDelete, handleEditClick, handleLike, handleUnlike }) {
+  const user = useSelector((state) => state.user.user)
+
   if (!article) {
-    return null
+    return <Navigate to="*" />
   }
 
-  const user = useSelector((state) => state.user.user)
-  
   const {
     title = '',
     description = '',
@@ -88,24 +90,25 @@ function Article({ article, showBody = false, handleDelete, handleEditClick, han
       <div className="article__text">
         <div className="article__text-container">
           <p className="article__text-description">{truncateText(validatedDescription)}</p>
-          {showBody && user && (
-            <>
-              <Popconfirm
-                title="Are you sure to delete this article?"
-                onConfirm={handleDelete}
-                okText="Yes"
-                cancelText="No"
-                placement="rightTop"
-              >
-                <CustomButton danger className={articleStyles.deleteButton}>
-                  Delete
+          <div className="article__text-buttons">
+            {showBody && user && (
+              <>
+                <CustomPopconfirm
+                  title="Are you sure to delete this article?"
+                  handleDelete={handleDelete}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <CustomButton danger className={articleStyles.deleteButton}>
+                    Delete
+                  </CustomButton>
+                </CustomPopconfirm>
+                <CustomButton className={articleStyles.editButton} onClick={handleEditClick}>
+                  Edit
                 </CustomButton>
-              </Popconfirm>
-              <CustomButton className={articleStyles.editButton} onClick={handleEditClick}>
-                Edit
-              </CustomButton>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
         {showBody && (
           <div className="article__text-body">

@@ -25,8 +25,7 @@ function ArticlesPage() {
   }
 
   if (isLoading) return <Loader />
-  if (error) return <ErrorIndicator message={error.message} />
-
+  if (error) return <ErrorIndicator message={error.data} description={error.data?.message || error.error} />
   return (
     <>
       <ArticlesList

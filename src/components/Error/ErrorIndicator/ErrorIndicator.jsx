@@ -1,11 +1,10 @@
 import { Alert } from 'antd'
 import { PropTypes } from 'prop-types'
 
-
-export default function ErrorIndicator({ message = 'Something went wrong. Try later.' }) {
+export default function ErrorIndicator({ message = 'Error', description = 'Something went wrong. Try later.' }) {
   return (
     <div className="error-indicator">
-      <Alert message="Error" description={message} type="error" showIcon />
+      <Alert message={message} description={description} type="error" showIcon />
     </div>
   )
 }

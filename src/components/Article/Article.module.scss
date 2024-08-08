@@ -109,14 +109,24 @@
     overflow-wrap: anywhere;
     &-container {
       display: flex;
-      align-items: center;
+			justify-content: space-between;
 			margin-bottom: 4px;
+			column-gap: 12px;
     }
     &-description {
       margin: 0;
-      margin-right: auto;
 			max-width: 682px;
     }
+		&-buttons{
+			@media (min-width: 768px) {
+				flex-direction: row;
+				column-gap: 12px;
+				justify-content: flex-start;	
+			}
+			display: flex;
+			flex-direction: column;
+			row-gap: 10px;
+		}
   }
 }
 
@@ -136,7 +146,6 @@
 .editButton {
   font-size: 14px;
   cursor: pointer;
-
   &:disabled {
     background-color: #a0aec0;
     cursor: not-allowed;
@@ -146,9 +155,9 @@
 .editButton {
   color: $success-color;
   border-color: $success-color;
-	margin-left: 12px;
   &:hover {
     color: $success-color !important;
     border-color: rgb(111, 243, 75) !important;
   }
 }
+

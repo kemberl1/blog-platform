@@ -63,6 +63,7 @@ function EditArticlePage() {
     } catch (error) {
       if (error.originalStatus === 403) {
         showErrorNotification('articleEditError', 'error')
+        navigate(`/articles/${slug}`, { replace: true })
       } else if (error?.data?.errors) {
         Object.entries(error.data.errors).forEach(([field, message]) => {
           setError('root', { type: 'manual', message: `${field} ${message}` })
