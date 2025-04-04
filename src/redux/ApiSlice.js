@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const ApiSlice = createApi({
   reducerPath: 'blogApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://blog.kata.academy/api/',
+    baseUrl: 'https://blog-platform.kata.academy/api',
     prepareHeaders: (headers, { getState }) => {
       const { token } = getState().user
       if (token) {
